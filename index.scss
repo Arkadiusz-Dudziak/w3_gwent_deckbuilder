@@ -1,6 +1,7 @@
 $main-color: #000;
 $main-text-color: #a8a7a8;
 $middle-div-text-color: #cea125;
+$scroll-border-color: #494648;
 body
 {
     margin:0;
@@ -11,6 +12,7 @@ body
 
 #deckbuilder
 {
+    clear: both;
     color: $main-text-color;
     
     .parent {
@@ -88,7 +90,7 @@ body
 
     .cards
     {
-        max-height: 800px;
+        max-height: 680px;
         overflow-y: scroll;
     }
 
@@ -188,6 +190,7 @@ body
     // border: 5px solid #555;
 }
 
+//https://codepen.io/sosuke/pen/Pjoqqp
 .white
 {
     filter: invert(99%) sepia(99%) saturate(10%) hue-rotate(240deg) brightness(104%) contrast(100%);
@@ -198,4 +201,33 @@ body
     // filter: invert(85%) sepia(0%) saturate(612%) hue-rotate(44deg) brightness(82%) contrast(82%);
 }
 
-//https://codepen.io/sosuke/pen/Pjoqqp
+::-webkit-scrollbar {
+    width: 22px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px $main-text-color; 
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: $main-text-color; 
+    border: solid 2px $scroll-border-color;
+}
+
+button
+{
+    float: right;
+    margin-top: 20px!important;
+    margin-right: 10px!important;
+    color: $main-color;
+    background: $middle-div-text-color;
+    font-size: 20px!important;
+}
+button:hover
+{
+    // background: 
+    color: #cea125;
+    background: #5c565a;
+}

@@ -11,6 +11,7 @@ var leaders_picked = {
         'sc': 0
 }
 
+var is_music_being_played = false; 
 
 var total_cards_in_deck = 0;
 var number_of_unit_strength = 0;
@@ -55,18 +56,40 @@ var deck_statistics = {
     
 }
 
-function playMusic()
-{
-    var audio = new Audio('gwent_music.mp3');
-    audio.play();
-    audio.loop = true;
-}
+// function playMusic(play)
+// {
+//     // var audio = new Audio('gwent_music.mp3');
+    
+//     // ply.src = "";
+//     console.log(play)
+//     if(play==1)
+//     {
+//         if(is_music_being_played==false)
+//         {
+//             audio.play();
+//             audio.loop = true;
+//             is_music_being_played = true;
+//         }
+//     }
+//     else
+//     {
+//         if(is_music_being_played==true)
+//         {
+//             music_player.src = "";
+//             // console.log("pause");
+//             // audio.pause();
+//             // audio.currentTime = 0;
+//         }
+//     }
+    
 
-function stopMusic()
-{
-    var sounds = document.getElementsByTagName('audio');
-    for(i=0; i<sounds.length; i++) sounds[i].pause();
-}
+// }
+
+// function stopMusic()
+// {
+//     var sounds = document.getElementsByTagName('audio');
+//     for(i=0; i<sounds.length; i++) sounds[i].pause();
+// }
 
 function changeFilter(filter, filter_number, column)
 {

@@ -24,12 +24,22 @@
     <title>Gwent deckbuilder</title>
 </head>
 <body>
-        <button onclick="playMusic()">
+        <!-- <button onclick="playMusic(1)">
             <i class="icon-play"></i>
         </button>
-        <button onclick="stopMusic()">
+        <button onclick="playMusic(0)">
             <i class="icon-stop"></i>
-        </button>
+        </button> -->
+    <audio tabindex="0" id="player" preload="auto" >
+        <source src="gwent_music.mp3">
+    </audio>
+    <button onclick="document.getElementById('player').pause()">
+        <i class="icon-stop"></i>
+    </button> 
+    <button onclick="document.getElementById('player').play()">
+        <i class="icon-play"></i>
+    </button> 
+    
     <div id="deckbuilder">
         
         <div id="faction_picker">
@@ -157,7 +167,6 @@
         </div>
         
     </div>
-
     
 </body>
 </html>

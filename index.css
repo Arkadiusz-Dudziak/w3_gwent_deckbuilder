@@ -7,6 +7,7 @@ body {
 }
 
 #deckbuilder {
+  clear: both;
   color: #a8a7a8;
 }
 
@@ -81,7 +82,7 @@ body {
 }
 
 #deckbuilder .cards {
-  max-height: 800px;
+  max-height: 680px;
   overflow-y: scroll;
 }
 
@@ -182,5 +183,34 @@ body {
 .color {
   -webkit-filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
           filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
+}
+
+::-webkit-scrollbar {
+  width: 22px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #a8a7a8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #a8a7a8;
+  border: solid 2px #494648;
+}
+
+button {
+  float: right;
+  margin-top: 20px !important;
+  margin-right: 10px !important;
+  color: #000;
+  background: #cea125;
+  font-size: 20px !important;
+}
+
+button:hover {
+  color: #cea125;
+  background: #5c565a;
 }
 /*# sourceMappingURL=index.css.map */
