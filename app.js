@@ -11,6 +11,50 @@ var leaders_picked = {
         'sc': 0
 }
 
+
+var total_cards_in_deck = 0;
+var number_of_unit_strength = 0;
+var number_hero_cards = 0;
+var number_of_special_cards = 0;
+var number_of_unit_cards = 0;
+const max_number_of_special_cards = 10;
+
+var deck_statistics = {
+    'nr':
+    {
+        "total_cards_in_deck": 0,
+        "number_of_unit_strength": 0,
+        "number_hero_cards": 0,
+        "number_of_special_cards": 0,
+        "number_of_unit_cards":0
+    },
+    'ng':
+    {
+        "total_cards_in_deck": 0,
+        "number_of_unit_strength": 0,
+        "number_hero_cards": 0,
+        "number_of_special_cards": 0,
+        "number_of_unit_cards":0
+    }, 
+    'ms':
+    {
+        "total_cards_in_deck": 0,
+        "number_of_unit_strength": 0,
+        "number_hero_cards": 0,
+        "number_of_special_cards": 0,
+        "number_of_unit_cards":0
+    },   
+    'sc':
+    {
+        "total_cards_in_deck": 0,
+        "number_of_unit_strength": 0,
+        "number_hero_cards": 0,
+        "number_of_special_cards": 0,
+        "number_of_unit_cards":0
+    }       
+    
+}
+
 function playMusic()
 {
     var audio = new Audio('gwent_music.mp3');
@@ -110,41 +154,80 @@ function choseFaction(faction)
 
     changeDisplayedCards(0);
     changeDisplayedCards(1);
+    changeDeckStatistics();
 }
 
-function getCardId(img_path)
+function getCard(img_path, faction_name_or_neutral)
 {
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
     let r_img_path = img_path.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
     // console.log(r_img_path);
 
-    let foundCard = cards[current_faction].filter( x => 
+    let foundCard = cards[faction_name_or_neutral].filter( x => 
         x.img_path == r_img_path
       );
 
     return foundCard;
 }
 
+
+function getCardId(img_path, faction)
+{
+    const regex = /^(.+[\/\\]original_cards[\/\\])/;
+    let r_img_path = img_path.replace(regex, '');
+    r_img_path = "original_cards/" + r_img_path
+    // console.log(r_img_path);
+    // console.log(img_path);
+    // console.log(cards);
+    // console.log(faction)
+    let index = cards[faction].findIndex( x => x.img_path === img_path );
+
+    return index;
+}
+
 function movecard(i)
 {
-    let foundCard = getCardId(i.src);
+    let faction_name_or_neutral = i.id.substring(0,2);
+    let foundCard = getCard(i.src, faction_name_or_neutral);
     // console.log(foundCard[0])
     //remove moved card from card collection 
     // console.log(cards);
-    cards[current_faction] = cards[current_faction].filter( x => 
+    
+    console.log(faction_name_or_neutral);
+    cards[faction_name_or_neutral] = cards[faction_name_or_neutral].filter( x => 
         x.img_path != foundCard[0].img_path
       );
     // console.log(cards);
     // var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
-    cards_in_deck[current_faction] = cards_in_deck[current_faction].concat(foundCard[0]);
+    cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].concat(foundCard[0]);
+
     // console.log(cards_in_deck);
     $("#filtered_card_deck").append(i)
+
+    deck_statistics[current_faction].total_cards_in_deck++;
+    deck_statistics[current_faction].number_of_unit_strength += foundCard[0].strength;
+    if(foundCard[0].type == "unit")
+        deck_statistics[current_faction].number_of_unit_cards++;
+    if(foundCard[0].filter[0] == types_of_cards[3] || foundCard[0].filter[1] == types_of_cards[3] || foundCard[0].filter[2] == types_of_cards[3])
+        deck_statistics[current_faction].number_hero_cards++;
+    if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
+        deck_statistics[current_faction].number_of_special_cards++;
+    
+    changeDeckStatistics();
     // removeElement(i);
     // console.log("movecard ", i)
 }
 
 
+function changeDeckStatistics()
+{
+    document.getElementById("number_of_cards_in_deck").innerHTML = deck_statistics[current_faction].total_cards_in_deck;
+    document.getElementById("number_of_unit_strength").innerHTML = deck_statistics[current_faction].number_of_unit_strength;
+    document.getElementById("number_of_unit_cards").innerHTML = deck_statistics[current_faction].number_of_unit_cards;
+    document.getElementById("number_hero_cards").innerHTML = deck_statistics[current_faction].number_hero_cards;
+    document.getElementById("number_of_special_cards").innerHTML = deck_statistics[current_faction].number_of_special_cards + "/" + max_number_of_special_cards;
+}
 
 function changeDisplayedCards(column)
 {
@@ -198,10 +281,19 @@ function changeDisplayedCards(column)
         for(let i=0; i<filteredCards.length; i++)
         {
             let card_inside_filtered = document.createElement("Div");
-            if(i<=filteredCardsNotNeutral.length)
-                card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+current_faction+i+'" onclick="movecard('+current_faction+i+')" src="'+filteredCards[i].img_path+'"/>';
+            let card_id;
+
+            if(i<filteredCardsNotNeutral.length)
+            {
+                card_id = getCardId(filteredCards[i].img_path, current_faction);
+                card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+current_faction+card_id+'" onclick="movecard('+current_faction+card_id+')" src="'+filteredCards[i].img_path+'"/>';
+            }
             else
-                card_inside_filtered.innerHTML = '<img id="'+"ne"+i+'" onclick="movecard(ne'+i+')" src="'+filteredCards[i].img_path+'"/>';
+            {
+                card_id = getCardId(filteredCards[i].img_path, "ne");
+                card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+"ne"+card_id+'" onclick="movecard(ne'+card_id+')" src="'+filteredCards[i].img_path+'"/>';
+            }
+                
             card_inside_filtered.classList.add("card");
             div_filtered_card_collection.appendChild(card_inside_filtered);
         }
@@ -284,6 +376,9 @@ function openLeaderPopup()
     // console.log(leaders_picked);
     setLeader(leaders_picked[current_faction])
 }
+
+
+
 
 
 window.onload = function() {
