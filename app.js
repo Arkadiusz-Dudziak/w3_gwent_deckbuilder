@@ -1,7 +1,5 @@
 var current_faction = 'nr'
-var current_filter;
-var current_filter_left = 'ALL CARDS'
-var current_filter_right = 'ALL CARDS'
+var current_filter = 'ALL CARDS'
 
 var card_style = " max-height: 320px; cursor: pointer; margin: 10px; float:left;"
 //nr, ng, ms, sc
@@ -30,16 +28,15 @@ function changeFilter(filter, filter_number, column)
 {
     var filter_text_1;
     var filters_li_list;
+    current_filter = filter;
     if(column == 0)
     {
-        current_filter_left = filter;
         filter_text_1 = document.getElementById('active-filter-1');
         filter_text_1.innerText = filter;
         filters_li_list = document.getElementById("filters-1").getElementsByTagName("li");
     }
     else
     {
-        current_filter_right = filter;
         filter_text_1 = document.getElementById('active-filter-2');
         filter_text_1.innerText = filter;
         filters_li_list = document.getElementById("filters-2").getElementsByTagName("li");
@@ -120,7 +117,7 @@ function getCardId(img_path)
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
     let r_img_path = img_path.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
-    console.log(r_img_path);
+    // console.log(r_img_path);
 
     let foundCard = cards[current_faction].filter( x => 
         x.img_path == r_img_path
@@ -151,50 +148,65 @@ function movecard(i)
 
 function changeDisplayedCards(column)
 {
+    // console.log("changeDisplayedCards ", current_filter, " column: ", column);
+    // console.log("");
     var cards_to_be_filtered;
+    var div_filtered_card_collection;
+    var filteredCardsNotNeutral;
+    var filteredNeutralCards;
+
     if(column == 0)
     {
         cards_to_be_filtered = cards;
-        console.log(cards_to_be_filtered);
+        // console.log("column0: ", cards_to_be_filtered);
+        div_filtered_card_collection = document.getElementById("filtered_card_collection");
+        div_filtered_card_collection.innerHTML = '';
     }
         
     if(column == 1)
     {
         cards_to_be_filtered = cards_in_deck;
-        console.log(cards_to_be_filtered)
+        // console.log("column1: ", cards_to_be_filtered);
+        div_filtered_card_collection = document.getElementById("filtered_card_deck");
+        div_filtered_card_collection.innerHTML = '';
     }
         
-
-    if(current_filter_left != "ALL CARDS")
+    if(cards_to_be_filtered[current_faction].length!=0)
     {
-        var filteredCardsNotNeutral = cards_to_be_filtered[current_faction].filter( x => 
-            x.filter == current_filter_left || x.filter[0] == current_filter_left || x.filter[1] == current_filter_left || x.filter[2] == current_filter_left
-          );
-        var filteredNeutralCards = cards_to_be_filtered["ne"].filter( x => 
-             x.filter == current_filter_left || x.filter[0] == current_filter_left || x.filter[1] == current_filter_left || x.filter[2] == current_filter_left
-        );
-    }
-    else
-    {
-        filteredCardsNotNeutral = cards_to_be_filtered[current_faction];
-        // filteredCards = cards[current_faction];
-        filteredNeutralCards = cards_to_be_filtered["ne"];
-    }
-    var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
-
-    // console.log(filteredCards);
-    div_filtered_card_collection = document.getElementById("filtered_card_collection");
-    div_filtered_card_collection.innerHTML = '';
-    for(let i=0; i<filteredCards.length; i++)
-    {
-        let card_inside_filtered = document.createElement("Div");
-        if(i<=filteredCardsNotNeutral.length)
-            card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+current_faction+i+'" onclick="movecard('+current_faction+i+')" src="'+filteredCards[i].img_path+'"/>';
+        // console.log(current_faction);
+        // console.log("changeDisplayedCards: ", cards_to_be_filtered[current_faction]);
+        if(current_filter != "ALL CARDS")
+        {
+            // console.log("length of cards_to_be_filtered: ", cards_to_be_filtered[current_faction].length)
+            filteredCardsNotNeutral = cards_to_be_filtered[current_faction].filter( x => 
+                x.filter == current_filter || x.filter[0] == current_filter || x.filter[1] == current_filter || x.filter[2] == current_filter
+            );
+            
+            filteredNeutralCards = cards_to_be_filtered["ne"].filter( x => 
+                x.filter == current_filter || x.filter[0] == current_filter || x.filter[1] == current_filter || x.filter[2] == current_filter
+            );
+        }
         else
-            card_inside_filtered.innerHTML = '<img id="'+"ne"+i+'" onclick="movecard(ne'+i+')" src="'+filteredCards[i].img_path+'"/>';
-        card_inside_filtered.classList.add("card");
-        div_filtered_card_collection.appendChild(card_inside_filtered);
+        {
+            filteredCardsNotNeutral = cards_to_be_filtered[current_faction];
+            filteredNeutralCards = cards_to_be_filtered["ne"];
+        }
+
+        var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
+
+        
+        for(let i=0; i<filteredCards.length; i++)
+        {
+            let card_inside_filtered = document.createElement("Div");
+            if(i<=filteredCardsNotNeutral.length)
+                card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+current_faction+i+'" onclick="movecard('+current_faction+i+')" src="'+filteredCards[i].img_path+'"/>';
+            else
+                card_inside_filtered.innerHTML = '<img id="'+"ne"+i+'" onclick="movecard(ne'+i+')" src="'+filteredCards[i].img_path+'"/>';
+            card_inside_filtered.classList.add("card");
+            div_filtered_card_collection.appendChild(card_inside_filtered);
+        }
     }
+    
 }
 
 function setLeader(leader)
@@ -268,8 +280,8 @@ function openLeaderPopup()
 
     popup.appendChild(popup_inner);
     document.getElementsByTagName("body")[0].appendChild(popup);
-    console.log(leaders_picked[current_faction]);
-    console.log(leaders_picked);
+    // console.log(leaders_picked[current_faction]);
+    // console.log(leaders_picked);
     setLeader(leaders_picked[current_faction])
 }
 

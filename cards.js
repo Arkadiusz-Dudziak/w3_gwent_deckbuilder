@@ -12,7 +12,8 @@ var cards_in_deck = {
     "nr":[],
     "ng":[],
     "ms":[],
-    "sc":[]
+    "sc":[],
+    "ne":[]
 }
     
 var cards = {
