@@ -80,7 +80,7 @@ body {
   cursor: pointer;
 }
 
-#deckbuilder #filtered_card_collection {
+#deckbuilder .cards {
   max-height: 800px;
   overflow-y: scroll;
 }
@@ -145,6 +145,12 @@ body {
 .card {
   float: left;
   background-color: #000 !important;
+}
+
+.cardimage {
+  max-height: 320px;
+  cursor: pointer;
+  margin: 10px;
 }
 
 .card img {

@@ -1,8 +1,9 @@
 var current_faction = 'nr'
+var current_filter;
 var current_filter_left = 'ALL CARDS'
 var current_filter_right = 'ALL CARDS'
 
-
+var card_style = " max-height: 320px; cursor: pointer; margin: 10px; float:left;"
 //nr, ng, ms, sc
 var default_leaders = [0,0,0,0];
 var leaders_picked = {
@@ -55,7 +56,7 @@ function changeFilter(filter, filter_number, column)
         else
             filters_li_list[i].classList.remove("white");
     }
-    changeDisplayedCards();
+    changeDisplayedCards(column);
 }
 
 function choseFaction(faction)
@@ -110,33 +111,74 @@ function choseFaction(faction)
         }
     }
 
-    changeDisplayedCards();
+    changeDisplayedCards(0);
+    changeDisplayedCards(1);
+}
+
+function getCardId(img_path)
+{
+    const regex = /^(.+[\/\\]original_cards[\/\\])/;
+    let r_img_path = img_path.replace(regex, '');
+    r_img_path = "original_cards/" + r_img_path
+    console.log(r_img_path);
+
+    let foundCard = cards[current_faction].filter( x => 
+        x.img_path == r_img_path
+      );
+
+    return foundCard;
 }
 
 function movecard(i)
 {
+    let foundCard = getCardId(i.src);
+    // console.log(foundCard[0])
+    //remove moved card from card collection 
+    // console.log(cards);
+    cards[current_faction] = cards[current_faction].filter( x => 
+        x.img_path != foundCard[0].img_path
+      );
+    // console.log(cards);
+    // var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
+    cards_in_deck[current_faction] = cards_in_deck[current_faction].concat(foundCard[0]);
+    // console.log(cards_in_deck);
     $("#filtered_card_deck").append(i)
-    removeElement(i);
-    console.log("movecard ", i)
+    // removeElement(i);
+    // console.log("movecard ", i)
 }
 
-function changeDisplayedCards()
+
+
+function changeDisplayedCards(column)
 {
-    // console.log(current_filter_left);
+    var cards_to_be_filtered;
+    if(column == 0)
+    {
+        cards_to_be_filtered = cards;
+        console.log(cards_to_be_filtered);
+    }
+        
+    if(column == 1)
+    {
+        cards_to_be_filtered = cards_in_deck;
+        console.log(cards_to_be_filtered)
+    }
+        
+
     if(current_filter_left != "ALL CARDS")
     {
-        var filteredCardsNotNeutral = cards[current_faction].filter( x => 
+        var filteredCardsNotNeutral = cards_to_be_filtered[current_faction].filter( x => 
             x.filter == current_filter_left || x.filter[0] == current_filter_left || x.filter[1] == current_filter_left || x.filter[2] == current_filter_left
           );
-        var filteredNeutralCards = cards["ne"].filter( x => 
+        var filteredNeutralCards = cards_to_be_filtered["ne"].filter( x => 
              x.filter == current_filter_left || x.filter[0] == current_filter_left || x.filter[1] == current_filter_left || x.filter[2] == current_filter_left
         );
     }
     else
     {
-        filteredCardsNotNeutral = cards[current_faction];
+        filteredCardsNotNeutral = cards_to_be_filtered[current_faction];
         // filteredCards = cards[current_faction];
-        filteredNeutralCards = cards["ne"];
+        filteredNeutralCards = cards_to_be_filtered["ne"];
     }
     var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
 
@@ -146,9 +188,10 @@ function changeDisplayedCards()
     for(let i=0; i<filteredCards.length; i++)
     {
         let card_inside_filtered = document.createElement("Div");
-        // card_inside_filtered.addEventListener("click", movecard(), false)
-        card_inside_filtered.innerHTML = '<img id="'+i+'" onclick="movecard('+i+')" src="'+filteredCards[i].img_path+'"/>';
-
+        if(i<=filteredCardsNotNeutral.length)
+            card_inside_filtered.innerHTML = '<img style="'+card_style+'" id="'+current_faction+i+'" onclick="movecard('+current_faction+i+')" src="'+filteredCards[i].img_path+'"/>';
+        else
+            card_inside_filtered.innerHTML = '<img id="'+"ne"+i+'" onclick="movecard(ne'+i+')" src="'+filteredCards[i].img_path+'"/>';
         card_inside_filtered.classList.add("card");
         div_filtered_card_collection.appendChild(card_inside_filtered);
     }

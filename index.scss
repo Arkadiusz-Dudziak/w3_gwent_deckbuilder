@@ -86,7 +86,7 @@ body
         cursor: pointer;
     }
 
-    #filtered_card_collection
+    .cards
     {
         max-height: 800px;
         overflow-y: scroll;
@@ -156,6 +156,12 @@ body
 {
     float: left;
     background-color: $main-color!important;
+}
+.cardimage
+{
+    max-height: 320px;
+    cursor: pointer;    
+    margin: 10px;
 }
 .card img
 {

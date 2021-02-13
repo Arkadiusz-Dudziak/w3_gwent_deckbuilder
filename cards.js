@@ -8,6 +8,13 @@ var card_file_type = ".png"
 
 var types_of_cards = ["CLOSE COMBAT", "RANGED COMBAT", "SIEGE COMBAT", "HERO UNITS", "WEATHER CARDS", "SPECIALS"]
 
+var cards_in_deck = {
+    "nr":[],
+    "ng":[],
+    "ms":[],
+    "sc":[]
+}
+    
 var cards = {
     "nr":[
         {
