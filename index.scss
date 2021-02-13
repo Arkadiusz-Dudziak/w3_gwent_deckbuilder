@@ -1,0 +1,195 @@
+$main-color: #000;
+$main-text-color: #a8a7a8;
+$middle-div-text-color: #cea125;
+body
+{
+    margin:0;
+    padding: 0;
+    background-color: $main-color!important;
+    color: $main-text-color;
+}
+
+#deckbuilder
+{
+    color: $main-text-color;
+    
+    .parent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .child {
+        display: inline-block;
+      }
+
+    #faction-name
+    {
+        margin-bottom: 0;
+    }
+    #faction-logo
+    {
+        width: 38px;
+        height: 42px;
+    }
+    #faction-logo img{
+        height: 100%;
+        width: 100%;
+     }
+     
+    .faction_picker
+    {
+        // text-align: center;
+    }
+    #faction-perk
+    {
+        text-align: center;
+    }
+    #faction-picker-ul 
+    {
+        padding: 0;
+        margin-top: 0;
+        text-align: center;
+        padding-top: 10px;
+    }
+    #faction-picker-ul li
+    {
+        cursor: pointer;
+        display: inline;
+        font-size: 15px;
+    }
+    .li-standard-color
+    {
+        color: #5c565a;
+    }
+    .picked-color-faction
+    {
+        color: #b49c59;
+    }
+
+
+    .card_collection
+    {
+        background-color: $main-color;
+    }
+
+
+    .filters > li:first-child
+    {
+        margin-left: 20px;
+    }
+    .filters > li
+    {
+        display: inline-block;
+        margin-top: 10px;
+        margin-right: 40px;
+        cursor: pointer;
+    }
+
+    #filtered_card_collection
+    {
+        max-height: 800px;
+        overflow-y: scroll;
+    }
+
+    .middle_div
+    {
+        color: $middle-div-text-color;
+        text-align: center;
+        .leader img
+        {
+            max-height: 250px;
+            cursor: pointer;
+        }
+        p
+        {
+            padding: 5px;
+            margin: 2px;
+        }
+        background-color: $main-color;
+    }
+    .cards_deck
+    {
+        text-align: right;
+        background-color: $main-color;
+    }
+}
+
+
+#popup 
+{ /*przesłania treść, zajmuje cały widok przeglądarki*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index:10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: transparent;
+}
+
+#popup_inner 
+{/*wnętrze popup'a i przycięcie okna do wyglądu popup'a*/
+    position: absolute;
+    text-align: center;
+    left: 15%;
+    right: 15%;
+    top: 5%;
+    bottom: 5%;
+    margin: auto;
+    overflow-y: auto;
+    color: black;
+    background-color: $main-color;
+    color: $middle-div-text-color;
+    background-color: transparent;
+}
+
+.popup_header
+{
+    background-color: $main-color;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.card
+{
+    float: left;
+    background-color: $main-color!important;
+}
+.card img
+{
+    max-height: 320px;
+    cursor: pointer;    
+    margin: 10px;
+    // background-color: $main-color;
+}
+
+.leader_inside_popup
+{
+    float: left;
+}
+.leader_inside_popup img
+{
+    max-height: 400px;
+    padding: 10px;
+    cursor: pointer;
+}
+.chosen_leader_inside_popup img
+{
+    max-height: 450px;
+    border-color: 10px solid $middle-div-text-color;
+    // border: 5px solid #555;
+}
+
+.white
+{
+    filter: invert(99%) sepia(99%) saturate(10%) hue-rotate(240deg) brightness(104%) contrast(100%);
+}
+.color
+{
+    filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
+    // filter: invert(85%) sepia(0%) saturate(612%) hue-rotate(44deg) brightness(82%) contrast(82%);
+}
+
+//https://codepen.io/sosuke/pen/Pjoqqp

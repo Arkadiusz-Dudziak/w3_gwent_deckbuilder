@@ -1,0 +1,180 @@
+@charset "UTF-8";
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000 !important;
+  color: #a8a7a8;
+}
+
+#deckbuilder {
+  color: #a8a7a8;
+}
+
+#deckbuilder .parent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#deckbuilder .child {
+  display: inline-block;
+}
+
+#deckbuilder #faction-name {
+  margin-bottom: 0;
+}
+
+#deckbuilder #faction-logo {
+  width: 38px;
+  height: 42px;
+}
+
+#deckbuilder #faction-logo img {
+  height: 100%;
+  width: 100%;
+}
+
+#deckbuilder #faction-perk {
+  text-align: center;
+}
+
+#deckbuilder #faction-picker-ul {
+  padding: 0;
+  margin-top: 0;
+  text-align: center;
+  padding-top: 10px;
+}
+
+#deckbuilder #faction-picker-ul li {
+  cursor: pointer;
+  display: inline;
+  font-size: 15px;
+}
+
+#deckbuilder .li-standard-color {
+  color: #5c565a;
+}
+
+#deckbuilder .picked-color-faction {
+  color: #b49c59;
+}
+
+#deckbuilder .card_collection {
+  background-color: #000;
+}
+
+#deckbuilder .filters > li:first-child {
+  margin-left: 20px;
+}
+
+#deckbuilder .filters > li {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 40px;
+  cursor: pointer;
+}
+
+#deckbuilder #filtered_card_collection {
+  max-height: 800px;
+  overflow-y: scroll;
+}
+
+#deckbuilder .middle_div {
+  color: #cea125;
+  text-align: center;
+  background-color: #000;
+}
+
+#deckbuilder .middle_div .leader img {
+  max-height: 250px;
+  cursor: pointer;
+}
+
+#deckbuilder .middle_div p {
+  padding: 5px;
+  margin: 2px;
+}
+
+#deckbuilder .cards_deck {
+  text-align: right;
+  background-color: #000;
+}
+
+#popup {
+  /*przesłania treść, zajmuje cały widok przeglądarki*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: transparent;
+}
+
+#popup_inner {
+  /*wnętrze popup'a i przycięcie okna do wyglądu popup'a*/
+  position: absolute;
+  text-align: center;
+  left: 15%;
+  right: 15%;
+  top: 5%;
+  bottom: 5%;
+  margin: auto;
+  overflow-y: auto;
+  color: black;
+  background-color: #000;
+  color: #cea125;
+  background-color: transparent;
+}
+
+.popup_header {
+  background-color: #000;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.card {
+  float: left;
+  background-color: #000 !important;
+}
+
+.card img {
+  max-height: 320px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.leader_inside_popup {
+  float: left;
+}
+
+.leader_inside_popup img {
+  max-height: 400px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.chosen_leader_inside_popup img {
+  max-height: 450px;
+  border-color: 10px solid #cea125;
+}
+
+.white {
+  -webkit-filter: invert(99%) sepia(99%) saturate(10%) hue-rotate(240deg) brightness(104%) contrast(100%);
+          filter: invert(99%) sepia(99%) saturate(10%) hue-rotate(240deg) brightness(104%) contrast(100%);
+}
+
+.color {
+  -webkit-filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
+          filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
+}
+/*# sourceMappingURL=index.css.map */

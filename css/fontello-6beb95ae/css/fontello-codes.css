@@ -1,0 +1,7 @@
+
+.icon-to-start:before { content: '\e800'; } /* '' */
+.icon-to-end:before { content: '\e801'; } /* '' */
+.icon-stop:before { content: '\e802'; } /* '' */
+.icon-play:before { content: '\e803'; } /* '' */
+.icon-dot:before { content: '\e804'; } /* '' */
+.icon-circle:before { content: '\f111'; } /* '' */

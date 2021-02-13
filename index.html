@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" type="text/css" rel="stylesheet"/>
+    <link href="css/fontello-83fcc124/css/fontello.css" type="text/css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href= 
+        "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+
+    <script src= 
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+    </script> 
+
+    <script src="jquery-3.5.1.min.js"></script>
+    
+
+    <script src="app.js"></script>
+    <title>Gwent deckbuilder</title>
+</head>
+<body>
+        <button onclick="playMusic()">
+            <i class="icon-play"></i>
+        </button>
+        <button onclick="stopMusic()">
+            <i class="icon-stop"></i>
+        </button>
+    <div id="deckbuilder">
+        
+        <div id="faction_picker">
+            <p style="text-align: center;">Chosen faction</p>
+
+            <div class="parent">
+                <div id="faction-logo" class="child">
+
+                </div>
+                <h3 id="faction-name" class="child">Northern Realms</h3>
+            </div>
+
+            
+            
+            <ul id="faction-picker-ul">
+                <li class="li-standard-color" onclick="choseFaction('nr')" value="Northern Realms">
+                    <i class="icon-circle"></i>
+                </li>
+                <li class="li-standard-color" onclick="choseFaction('ms')" value="Monsters">
+                    <i class="icon-circle"></i>
+                </li>
+                <li class="li-standard-color" onclick="choseFaction('ng')" value="Nilgaard">
+                    <i class="icon-circle"></i>
+                </li>
+                <li class="li-standard-color" onclick="choseFaction('sc')" value="Scoia'tael">
+                    <i class="icon-circle"></i>
+                </li>
+            </ul>
+            <p id="faction-perk">Draw a card from your deck whenever you win a round.</p>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card_collection col-5">
+                    <h4>Card collection</h4>
+                    <span id="active-filter-1">ALL CARDS</span>
+                    <ul id="filters-1" class="filters">
+                        <li onclick="changeFilter('ALL CARDS', 0, 0)">
+                            <img class="color" src="icons/all_cards_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('CLOSE COMBAT', 1, 0)">
+                            <img class="color" src="icons/sword_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('RANGED COMBAT', 2, 0)">
+                            <img class="color" src="icons/arrow_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('SIEGE COMBAT', 3, 0)">
+                            <img class="color" src="icons/catapult_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('HERO UNITS', 4, 0)">
+                            <img class="color" src="icons/hero_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('WEATHER CARDS', 5, 0)">
+                            <img class="color" src="icons/weather_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('SPECIALS', 6, 0)">
+                            <img class="color" src="icons/specials_icon.png"/>
+                        </li>
+                    </ul>
+
+                    <div id="filtered_card_collection">
+
+                    </div>
+                </div>
+        
+                <div class="middle_div col-2">
+                    <div class="leader">
+                        <p>Leader</p>
+                        <!-- Foltest King of Temeria.png -->
+                        <div id="leader-art" onclick="openLeaderPopup()">
+                            
+                        </div>
+                        <p>Total cards in deck</p>
+                            <img src="/icons/deck_cards.png"/>
+                            <span id="number_of_cards_in_deck">30</span>
+                        <p>Number of Unit Cards</p>
+                            <img src="/icons/unit_cards.png"/>
+                            <span id="number_of_unit_cards">22</span>
+                        <p>Special Cards</p>
+                            <img src="/icons/special_cards_green.png"/>
+                            <span id="number_of_special_cards" style="color:green">6/10</span>
+                        <p>Total Unit Card Strength</p>
+                            <img src="/icons/unit_strength.png"/>
+                            <span id="number_of_unit_strength">90</span>
+                        <p>Hero Cards</p>
+                            <img src="/icons/hero_cards.png"/>
+                            <span id="number_hero_cards">2</span>
+                    </div>
+                </div>
+        
+                <div class="cards_deck col-5">
+                    <h4>Cards in deck</h4>
+                    <span id="active-filter-2">ALL CARDS</span>
+                    <ul id="filters-2" class="filters">
+                        <li onclick="changeFilter('ALL CARDS', 0, 1)">
+                            <img class="color" src="icons/all_cards_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('CLOSE COMBAT', 1, 1)">
+                            <img class="color" src="icons/sword_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('RANGED COMBAT', 2, 1)">
+                            <img class="color" src="icons/arrow_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('SIEGE COMBAT', 3, 1)">
+                            <img class="color" src="icons/catapult_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('HERO UNITS', 4, 1)">
+                            <img class="color" src="icons/hero_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('WEATHER CARDS', 5, 1)">
+                            <img class="color" src="icons/weather_icon.png"/>
+                        </li>
+                        <li onclick="changeFilter('SPECIALS', 6, 1)">
+                            <img class="color" src="icons/specials_icon.png"/>
+                        </li>
+                    </ul>
+
+                    <div id="filtered_card_deck">
+                        
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    
+</body>
+</html>
