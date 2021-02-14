@@ -50,6 +50,12 @@ var cards = {
         },
         {
             "type": "unit",
+            "filter": types_of_cards[1],
+            "strength": 5,
+            "img_path": nr_cards_path + "crinfrid2" + card_file_type
+        },
+        {
+            "type": "unit",
             "filter": types_of_cards[0],
             "strength": 1,
             "img_path": nr_cards_path + "foot_soldier1" + card_file_type
@@ -77,6 +83,12 @@ var cards = {
             "filter": types_of_cards[0],
             "strength": 1,
             "img_path": nr_cards_path + "infantry" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 1,
+            "img_path": nr_cards_path + "infantry2" + card_file_type
         },
         {
             "type": "unit",
@@ -211,6 +223,12 @@ var cards = {
             "filter": types_of_cards[1],
             "strength": 2,
             "img_path": ms_cards_path + "wyvern" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[1],
+            "strength": 7,
+            "img_path": ms_cards_path + "toad" + card_file_type
         },
         {
             "type": "unit",
@@ -445,12 +463,6 @@ var cards = {
         {
             "type": "unit",
             "filter": types_of_cards[1],
-            "strength": 1,
-            "img_path": ng_cards_path + "aux_archers1" + card_file_type
-        },
-        {
-            "type": "unit",
-            "filter": types_of_cards[1],
             "strength": 6,
             "img_path": ng_cards_path + "assire_var_anahid" + card_file_type
         },
@@ -465,12 +477,6 @@ var cards = {
             "filter": types_of_cards[1],
             "strength": 10,
             "img_path": ng_cards_path + "black_infantry_archer1" + card_file_type
-        },
-        {
-            "type": "unit",
-            "filter": types_of_cards[1],
-            "strength": 10,
-            "img_path": ng_cards_path + "black_infantry_archer2" + card_file_type
         },
         {
             "type": "unit",
@@ -589,12 +595,6 @@ var cards = {
         {
             "type": "unit",
             "filter": types_of_cards[0],
-            "strength": 2,
-            "img_path": ng_cards_path + "sweers" + card_file_type
-        },
-        {
-            "type": "unit",
-            "filter": types_of_cards[1],
             "strength": 2,
             "img_path": ng_cards_path + "sweers" + card_file_type
         },
@@ -863,8 +863,13 @@ var cards = {
             "filter": [types_of_cards[0], types_of_cards[1]],
             "strength": 6,
             "img_path": sc_cards_path + "yaevinn" + card_file_type
-            // "in_deck": 0
         },
+        {
+            "type": "unit",
+            "filter": types_of_cards[2],
+            "strength": 8,
+            "img_path": sc_cards_path + "schirru" + card_file_type
+        }
     ],
     "ne":[
         {
@@ -901,6 +906,12 @@ var cards = {
             "type": "unit",
             "filter": types_of_cards[0],
             "strength": 5,
+            "img_path": ne_cards_path + "regis" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 5,
             "img_path": ne_cards_path + "zoltan" + card_file_type
         },
         {
@@ -922,10 +933,58 @@ var cards = {
             "img_path": ne_cards_path + "dandelion" + card_file_type
         },
         {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 0,
+            "img_path": ne_cards_path + "cow" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 2,
+            "img_path": ne_cards_path + "gaunter_o_dimm" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 4,
+            "img_path": ne_cards_path + "god_darkness" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 4,
+            "img_path": ne_cards_path + "god_darkness2" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": types_of_cards[0],
+            "strength": 4,
+            "img_path": ne_cards_path + "god_darkness3" + card_file_type
+        },
+        {
+            "type": "unit",
+            "filter": [types_of_cards[0], types_of_cards[1]],
+            "strength": 6,
+            "img_path": ne_cards_path + "olgierd_von_everec" + card_file_type
+        },
+        {
             "type": "special",
             "filter": types_of_cards[4],
             "strength": 0,
             "img_path": ne_cards_path + "clear" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "clear2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "clear3" + card_file_type
         },
         {
             "type": "special",
@@ -937,13 +996,49 @@ var cards = {
             "type": "special",
             "filter": types_of_cards[4],
             "strength": 0,
+            "img_path": ne_cards_path + "fog2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "fog3" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
             "img_path": ne_cards_path + "frost" + card_file_type
         },
         {
             "type": "special",
             "filter": types_of_cards[4],
             "strength": 0,
+            "img_path": ne_cards_path + "frost2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "frost3" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
             "img_path": ne_cards_path + "rain" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "rain2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[4],
+            "strength": 0,
+            "img_path": ne_cards_path + "rain3" + card_file_type
         },
         {
             "type": "special",
@@ -955,13 +1050,55 @@ var cards = {
             "type": "special",
             "filter": types_of_cards[5],
             "strength": 0,
+            "img_path": ne_cards_path + "scorch2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
+            "img_path": ne_cards_path + "scorch3" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
             "img_path": ne_cards_path + "horn" + card_file_type
         },
         {
             "type": "special",
             "filter": types_of_cards[5],
             "strength": 0,
+            "img_path": ne_cards_path + "horn2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
+            "img_path": ne_cards_path + "horn3" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
+            "img_path": ne_cards_path + "horn4" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
             "img_path": ne_cards_path + "decoy" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
+            "img_path": ne_cards_path + "decoy2" + card_file_type
+        },
+        {
+            "type": "special",
+            "filter": types_of_cards[5],
+            "strength": 0,
+            "img_path": ne_cards_path + "decoy3" + card_file_type
         }
     ]
 }

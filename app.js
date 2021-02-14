@@ -60,40 +60,6 @@ var deck_statistics = {
     
 }
 
-// function playMusic(play)
-// {
-//     // var audio = new Audio('gwent_music.mp3');
-    
-//     // ply.src = "";
-//     console.log(play)
-//     if(play==1)
-//     {
-//         if(is_music_being_played==false)
-//         {
-//             audio.play();
-//             audio.loop = true;
-//             is_music_being_played = true;
-//         }
-//     }
-//     else
-//     {
-//         if(is_music_being_played==true)
-//         {
-//             music_player.src = "";
-//             // console.log("pause");
-//             // audio.pause();
-//             // audio.currentTime = 0;
-//         }
-//     }
-    
-
-// }
-
-// function stopMusic()
-// {
-//     var sounds = document.getElementsByTagName('audio');
-//     for(i=0; i<sounds.length; i++) sounds[i].pause();
-// }
 
 function changeFilter(filter, filter_number, column)
 {
@@ -191,7 +157,6 @@ function getCard(img_path, faction_name_or_neutral, place_to_search)
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
     let r_img_path = img_path.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
-    // console.log(r_img_path);
 
     if(place_to_search == "cards")
     {
@@ -202,7 +167,6 @@ function getCard(img_path, faction_name_or_neutral, place_to_search)
     }
     else
     {
-        console.log(img_path, " ", r_img_path)
         let foundCard = cards_in_deck[faction_name_or_neutral].filter( x => 
             x.img_path == r_img_path
           );
@@ -218,10 +182,7 @@ function getCardId(img_path, faction)
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
     let r_img_path = img_path.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
-    // console.log(r_img_path);
-    // console.log(img_path);
-    // console.log(cards);
-    // console.log(faction)
+
     let index = cards[faction].findIndex( x => x.img_path === img_path );
 
     return index;
@@ -231,66 +192,43 @@ function movecard(i)
 {
     let faction_name_or_neutral = i.id.substring(0,2);
     var foundCard;
-    
-    // console.log(foundCard[0])
-    //remove moved card from card collection 
-    // console.log(cards);
+    let plus_or_minus = 1; // indicates if deck statistics should be added or substracted - 1 added, -1 substracted
     let parent = i.parentNode;
-    // console.log("parent.id ", parent.id)
-    // console.log("parent.parentNode.id ", parent.parentNode.id)
+
     if(parent.id=="filtered_card_deck")
     {
-        console.log("#### ,",i.src);
         foundCard = getCard(i.src, faction_name_or_neutral, "cards_in_deck");
-        // console.log(cards_in_deck[faction_name_or_neutral]);
-        console.log(foundCard[0].img_path)
         cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
         cards[faction_name_or_neutral] = cards[faction_name_or_neutral].concat(foundCard[0]);
 
         $("#filtered_card_collection").append(i)
-
-        deck_statistics[current_faction].total_cards_in_deck--;
-        deck_statistics[current_faction].number_of_unit_strength -= foundCard[0].strength;
-        if(foundCard[0].type == "unit")
-            deck_statistics[current_faction].number_of_unit_cards--;
-        if(foundCard[0].filter[0] == types_of_cards[3] || foundCard[0].filter[1] == types_of_cards[3] || foundCard[0].filter[2] == types_of_cards[3])
-            deck_statistics[current_faction].number_hero_cards--;
-        if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
-            deck_statistics[current_faction].number_of_special_cards--;
         
-        changeDeckStatistics();
+        plus_or_minus = -1;
     }
     else
     {
-        // console.log(faction_name_or_neutral);
         foundCard = getCard(i.src, faction_name_or_neutral, "cards");
-        console.log(foundCard[0].img_path)
         cards[faction_name_or_neutral] = cards[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
-        // console.log(cards);
-        // var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
         cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].concat(foundCard[0]);
 
-        // console.log(cards_in_deck);
         $("#filtered_card_deck").append(i)
-
-        deck_statistics[current_faction].total_cards_in_deck++;
-        deck_statistics[current_faction].number_of_unit_strength += foundCard[0].strength;
-        if(foundCard[0].type == "unit")
-            deck_statistics[current_faction].number_of_unit_cards++;
-        if(foundCard[0].filter[0] == types_of_cards[3] || foundCard[0].filter[1] == types_of_cards[3] || foundCard[0].filter[2] == types_of_cards[3])
-            deck_statistics[current_faction].number_hero_cards++;
-        if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
-            deck_statistics[current_faction].number_of_special_cards++;
-        
-        changeDeckStatistics();
+        plus_or_minus = 1;
     }
+    deck_statistics[current_faction].total_cards_in_deck += plus_or_minus;
+    deck_statistics[current_faction].number_of_unit_strength += (plus_or_minus*foundCard[0].strength);
+    if(foundCard[0].type == "unit")
+        deck_statistics[current_faction].number_of_unit_cards += plus_or_minus;
+    if(foundCard[0].filter[0] == types_of_cards[3] || foundCard[0].filter[1] == types_of_cards[3] || foundCard[0].filter[2] == types_of_cards[3])
+        deck_statistics[current_faction].number_hero_cards += plus_or_minus;
+    if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
+        deck_statistics[current_faction].number_of_special_cards += plus_or_minus;
     
+    changeDeckStatistics();
     // removeElement(i);
-    // console.log("movecard ", i)
 }
 
 
@@ -301,6 +239,20 @@ function changeDeckStatistics()
     document.getElementById("number_of_unit_cards").innerHTML = deck_statistics[current_faction].number_of_unit_cards;
     document.getElementById("number_hero_cards").innerHTML = deck_statistics[current_faction].number_hero_cards;
     document.getElementById("number_of_special_cards").innerHTML = deck_statistics[current_faction].number_of_special_cards + "/" + max_number_of_special_cards;
+    if(deck_statistics[current_faction].number_of_special_cards<=max_number_of_special_cards)
+    {
+        document.getElementById("number_of_special_cards").style.color = "green";
+        document.getElementById("special_icon").classList.remove("red");
+        // document.getElementById("special_icon").classList.add("green");
+    }
+        
+    else
+    {
+        document.getElementById("number_of_special_cards").style.color = "red";
+        document.getElementById("special_icon").classList.remove("green");
+        document.getElementById("special_icon").classList.add("red");
+    }
+        
 }
 
 function changeDisplayedCards(column)
@@ -314,7 +266,6 @@ function changeDisplayedCards(column)
     {
         current_filter = current_filter_left;
         cards_to_be_filtered = cards;
-        // console.log("column0: ", cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_collection");
         div_filtered_card_collection.innerHTML = '';
     }
@@ -323,18 +274,14 @@ function changeDisplayedCards(column)
     {
         current_filter = current_filter_right;
         cards_to_be_filtered = cards_in_deck;
-        // console.log("column1: ", cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_deck");
         div_filtered_card_collection.innerHTML = '';
     }
         
-    if(cards_to_be_filtered[current_faction].length!=0)
+    if(cards_to_be_filtered[current_faction].length!=0 || cards_to_be_filtered["ne"].length!=0)
     {
-        // console.log(current_faction);
-        // console.log("changeDisplayedCards: ", cards_to_be_filtered[current_faction]);
         if(current_filter != "ALL CARDS")
         {
-            // console.log("length of cards_to_be_filtered: ", cards_to_be_filtered[current_faction].length)
             filteredCardsNotNeutral = cards_to_be_filtered[current_faction].filter( x => 
                 x.filter == current_filter || x.filter[0] == current_filter || x.filter[1] == current_filter || x.filter[2] == current_filter
             );
@@ -377,7 +324,6 @@ function changeDisplayedCards(column)
 
 function setLeader(leader)
 {
-    // console.log(leader);
     //set leader ability text 
     var leader_ability_text = document.getElementById("leader_ability_text");
     leader_ability_text.innerHTML = leaders[current_faction][leader].ability;
@@ -446,13 +392,9 @@ function openLeaderPopup()
 
     popup.appendChild(popup_inner);
     document.getElementsByTagName("body")[0].appendChild(popup);
-    // console.log(leaders_picked[current_faction]);
-    // console.log(leaders_picked);
+
     setLeader(leaders_picked[current_faction])
 }
-
-
-
 
 
 window.onload = function() {

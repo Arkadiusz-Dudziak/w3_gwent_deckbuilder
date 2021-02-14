@@ -185,6 +185,16 @@ body {
           filter: invert(56%) sepia(71%) saturate(456%) hue-rotate(6deg) brightness(99%) contrast(92%);
 }
 
+.red {
+  -webkit-filter: invert(13%) sepia(96%) saturate(4577%) hue-rotate(357deg) brightness(106%) contrast(121%);
+          filter: invert(13%) sepia(96%) saturate(4577%) hue-rotate(357deg) brightness(106%) contrast(121%);
+}
+
+.green {
+  -webkit-filter: invert(68%) sepia(12%) saturate(6124%) hue-rotate(57deg) brightness(113%) contrast(114%);
+          filter: invert(68%) sepia(12%) saturate(6124%) hue-rotate(57deg) brightness(113%) contrast(114%);
+}
+
 ::-webkit-scrollbar {
   width: 22px;
 }
