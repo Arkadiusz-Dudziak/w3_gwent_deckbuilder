@@ -83,7 +83,7 @@ body {
 
 #deckbuilder .cards {
   max-height: 680px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #deckbuilder .middle_div {
