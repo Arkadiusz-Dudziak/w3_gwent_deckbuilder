@@ -95,17 +95,20 @@ function changeFilter(filter, filter_number, column)
     changeDisplayedCards(column);
 }
 
+
 function choseFaction(faction)
 {
     var ul = document.getElementById('faction-picker-ul');
     var list = document.getElementById('faction-picker-ul').getElementsByTagName("li");
     var number = 0;
     current_faction = faction;
+
     switch(faction)
     {
         case 'nr':
             document.getElementById('faction-name').innerText = "Northern Realms"
             number = 0;
+            $("#favicon").attr("href","Northern_Realms_logo.png");
             document.getElementById('faction-perk').innerText = "Draw a card from your deck whenever you win a round."
             document.getElementById('faction-logo').innerHTML = '<img src="'+resources_path+'Rules/Northern_Realms_logo.png"/>' 
             document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leaders_picked[current_faction]].img_path+'"/>'
@@ -113,6 +116,7 @@ function choseFaction(faction)
         case 'ms':
             document.getElementById('faction-name').innerText = "Monsters"
             number = 1;
+            $("#favicon").attr("href","Monsters_logo.png");
             document.getElementById('faction-perk').innerText = "Keps random Unit Card out after each round."
             document.getElementById('faction-logo').innerHTML = '<img src="'+resources_path+'Rules/Monsters_logo.png"/>'
             document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leaders_picked[current_faction]].img_path+'"/>'
@@ -120,6 +124,7 @@ function choseFaction(faction)
         case 'ng':
             document.getElementById('faction-name').innerText = "Nilfgaard"
             number = 2;
+            $("#favicon").attr("href","Nilfgaard_logo.png");
             document.getElementById('faction-perk').innerText = "Wins any round that ends in a draw."
             document.getElementById('faction-logo').innerHTML = '<img src="'+resources_path+'Rules/Nilfgaard_logo.png"/>'
             document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leaders_picked[current_faction]].img_path+'"/>'
@@ -127,6 +132,7 @@ function choseFaction(faction)
         case 'sc':
             document.getElementById('faction-name').innerText = "Scoia'tael"
             number = 3;
+            $("#favicon").attr("href","Scoiatael_logo.png");
             document.getElementById('faction-perk').innerText = "Decides who takes first turn."
             document.getElementById('faction-logo').innerHTML = '<img src="'+resources_path+'Rules/Scoiatael_logo.png"/>'
             document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leaders_picked[current_faction]].img_path+'"/>'
