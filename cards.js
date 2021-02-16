@@ -15,8 +15,11 @@ var cards_in_deck = {
     "sc":[],
     "ne":[]
 }
+// JSON.parse(localStorage.getItem("names"));
+if(localStorage.getItem("cards_in_deck")!=null)
+    cards_in_deck = JSON.parse(localStorage.getItem("cards_in_deck"))
     
-var cards = {
+const cards_full_collection = {
     "nr":[
         {
             "type": "unit",
@@ -1102,3 +1105,10 @@ var cards = {
         }
     ]
 }
+
+var cards;
+
+if(localStorage.getItem("cards")!=null)
+    cards = JSON.parse(localStorage.getItem("cards"))
+else
+    cards = Object.assign({}, cards_full_collection);

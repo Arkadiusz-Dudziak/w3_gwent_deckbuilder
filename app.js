@@ -158,28 +158,18 @@ function choseFaction(faction)
     changeDeckStatistics();
 }
 
-function getCard(img_path, faction_name_or_neutral, place_to_search)
+function getCard(img_path1, faction_name_or_neutral)
 {
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
-    let r_img_path = img_path.replace(regex, '');
+    let r_img_path = img_path1.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
-
-    if(place_to_search == "cards")
-    {
-        let foundCard = cards[faction_name_or_neutral].filter( x => 
-            x.img_path == r_img_path
-          );
-        return foundCard;
-    }
-    else
-    {
-        let foundCard = cards_in_deck[faction_name_or_neutral].filter( x => 
-            x.img_path == r_img_path
-          );
-        return foundCard;
-    }
-
+    // console.log("getCard = ", img_path1, " ", faction_name_or_neutral, " ", r_img_path)
     
+    let foundCard = cards_full_collection[faction_name_or_neutral].filter( x => 
+        x.img_path == r_img_path
+        );
+
+    return foundCard;
 }
 
 
@@ -188,10 +178,16 @@ function getCardId(img_path, faction)
     const regex = /^(.+[\/\\]original_cards[\/\\])/;
     let r_img_path = img_path.replace(regex, '');
     r_img_path = "original_cards/" + r_img_path
-
-    let index = cards[faction].findIndex( x => x.img_path === img_path );
+    // console.log("getCardId")
+    let index = cards_full_collection[faction].findIndex( x => x.img_path === img_path );
 
     return index;
+}
+
+function saveChangesToLocalStorage()
+{
+    localStorage.setItem("cards_in_deck", JSON.stringify(cards_in_deck));
+    localStorage.setItem("cards", JSON.stringify(cards));
 }
 
 function movecard(i)
@@ -200,10 +196,12 @@ function movecard(i)
     var foundCard;
     let plus_or_minus = 1; // indicates if deck statistics should be added or substracted - 1 added, -1 substracted
     let parent = i.parentNode;
-
-    if(parent.id=="filtered_card_deck")
+    let parentparent = parent.parentNode;
+    console.log("parent.id = ", parent.id, " ", i.id, "parentParent.id", parentparent.id);
+    if(parent.id=="filtered_card_deck" || parentparent.id =="filtered_card_deck")
     {
-        foundCard = getCard(i.src, faction_name_or_neutral, "cards_in_deck");
+        foundCard = getCard(i.src, faction_name_or_neutral);
+        console.log("filtered_card_deck", foundCard);
         cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
@@ -211,11 +209,13 @@ function movecard(i)
 
         $("#filtered_card_collection").append(i)
         
+        // console.log("movecard: ", i);
         plus_or_minus = -1;
     }
     else
     {
-        foundCard = getCard(i.src, faction_name_or_neutral, "cards");
+        foundCard = getCard(i.src, faction_name_or_neutral);
+        console.log("filtered_card_collection", foundCard);
         cards[faction_name_or_neutral] = cards[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
@@ -224,6 +224,7 @@ function movecard(i)
         $("#filtered_card_deck").append(i)
         plus_or_minus = 1;
     }
+
     deck_statistics[current_faction].total_cards_in_deck += plus_or_minus;
     deck_statistics[current_faction].number_of_unit_strength += (plus_or_minus*foundCard[0].strength);
     if(foundCard[0].type == "unit")
@@ -232,7 +233,11 @@ function movecard(i)
         deck_statistics[current_faction].number_hero_cards += plus_or_minus;
     if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
         deck_statistics[current_faction].number_of_special_cards += plus_or_minus;
+
+    var audio = new Audio("card_sound.wav");
+    audio.play();
     
+    saveChangesToLocalStorage();
     changeDeckStatistics();
     // removeElement(i);
 }
@@ -267,11 +272,13 @@ function changeDisplayedCards(column)
     var div_filtered_card_collection;
     var filteredCardsNotNeutral;
     var filteredNeutralCards;
+    console.log("##########################");
 
     if(column == 0)
     {
         current_filter = current_filter_left;
         cards_to_be_filtered = cards;
+        console.log(cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_collection");
         div_filtered_card_collection.innerHTML = '';
     }
@@ -280,6 +287,7 @@ function changeDisplayedCards(column)
     {
         current_filter = current_filter_right;
         cards_to_be_filtered = cards_in_deck;
+        console.log(cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_deck");
         div_filtered_card_collection.innerHTML = '';
     }
@@ -304,7 +312,8 @@ function changeDisplayedCards(column)
 
         var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
 
-        
+        console.log("filteredCards.length: ", filteredCards.length)
+        console.log("div: ", div_filtered_card_collection.id)
         for(let i=0; i<filteredCards.length; i++)
         {
             let card_inside_filtered = document.createElement("Div");
@@ -408,4 +417,5 @@ window.onload = function() {
     // changeFilter('ALL CARDS', 0)
     changeFilter('ALL CARDS', 0, 0);
     changeFilter('ALL CARDS', 0, 1);
+    console.log("-------------------AFTER LOAD------------------")
   };
