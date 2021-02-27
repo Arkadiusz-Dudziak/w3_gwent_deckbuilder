@@ -209,14 +209,15 @@ function movecard(i)
     if(faction_name_or_neutral == "ne")
         temp_faction_name_or_neutral += "-" + current_faction;
 
+    foundCard = getCard(i.src, faction_name_or_neutral);
+
     if(parent.id=="filtered_card_deck" || parentparent.id =="filtered_card_deck")
     {
         console.log("---> temp_faction_name_or_neutral: ", temp_faction_name_or_neutral);
         
-        foundCard = getCard(i.src, faction_name_or_neutral);
         console.log("filtered_card_deck", foundCard);
         
-        cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].filter( x => 
+        cards_in_deck[temp_faction_name_or_neutral] = cards_in_deck[temp_faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
         cards[faction_name_or_neutral] = cards[faction_name_or_neutral].concat(foundCard[0]);
@@ -228,12 +229,11 @@ function movecard(i)
     }
     else
     {
-        foundCard = getCard(i.src, faction_name_or_neutral);
         console.log("filtered_card_collection", foundCard);
         cards[faction_name_or_neutral] = cards[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
-        cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].concat(foundCard[0]);
+        cards_in_deck[temp_faction_name_or_neutral] = cards_in_deck[temp_faction_name_or_neutral].concat(foundCard[0]);
 
         $("#filtered_card_deck").append(i)
         plus_or_minus = 1;
@@ -248,7 +248,7 @@ function movecard(i)
     if(foundCard[0].filter == types_of_cards[4] || foundCard[0].filter == types_of_cards[5])
         deck_statistics[current_faction].number_of_special_cards += plus_or_minus;
 
-    var audio = new Audio("card_sound.wav");
+    let audio = new Audio("card_sound.wav");
     audio.play();
     
     saveChangesToLocalStorage();
@@ -286,12 +286,14 @@ function changeDisplayedCards(column)
     var div_filtered_card_collection;
     var filteredCardsNotNeutral;
     var filteredNeutralCards;
+    let temp_faction_neutrals = "ne-"+current_faction
     console.log("##########################");
 
     if(column == 0)
     {
         current_filter = current_filter_left;
         cards_to_be_filtered = cards;
+        cards_to_be_filtered[temp_faction_neutrals] = cards["ne"];
         console.log(cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_collection");
         div_filtered_card_collection.innerHTML = '';
@@ -301,12 +303,13 @@ function changeDisplayedCards(column)
     {
         current_filter = current_filter_right;
         cards_to_be_filtered = cards_in_deck;
+        console.log("cards to be filtered - COLUMN 1: ", cards_to_be_filtered);
         console.log(cards_to_be_filtered);
         div_filtered_card_collection = document.getElementById("filtered_card_deck");
         div_filtered_card_collection.innerHTML = '';
     }
         
-    if(cards_to_be_filtered[current_faction].length!=0 || cards_to_be_filtered["ne"].length!=0)
+    if(cards_to_be_filtered[current_faction].length!=0 || cards_to_be_filtered[temp_faction_neutrals].length!=0)
     {
         if(current_filter != "ALL CARDS")
         {
@@ -314,14 +317,14 @@ function changeDisplayedCards(column)
                 x.filter == current_filter || x.filter[0] == current_filter || x.filter[1] == current_filter || x.filter[2] == current_filter
             );
             
-            filteredNeutralCards = cards_to_be_filtered["ne"].filter( x => 
+            filteredNeutralCards = cards_to_be_filtered[temp_faction_neutrals].filter( x => 
                 x.filter == current_filter || x.filter[0] == current_filter || x.filter[1] == current_filter || x.filter[2] == current_filter
             );
         }
         else
         {
             filteredCardsNotNeutral = cards_to_be_filtered[current_faction];
-            filteredNeutralCards = cards_to_be_filtered["ne"];
+            filteredNeutralCards = cards_to_be_filtered[temp_faction_neutrals];
         }
 
         var filteredCards = filteredCardsNotNeutral.concat(filteredNeutralCards);
@@ -367,6 +370,9 @@ function setLeader(leader)
     }
     leaders_picked[current_faction] = leader;
     document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leader].img_path+'"/>'
+
+    let audio = new Audio("card_sound.wav");
+    audio.play();
     // nr_leader = leader;
 }
 
@@ -392,7 +398,9 @@ function openLeaderPopup()
     var cross_div_icon = document.createElement("div");
     cross_div_icon.style.float = "right";
     cross_div_icon.style.cursor = "pointer";
-    cross_div_icon.innerHTML = '<span onclick="closeLeaderPopup()">X</span>';
+    cross_div_icon.style.fontSize = "30px";
+    cross_div_icon.style.marginRight = "10px";
+    cross_div_icon.innerHTML = '<span style="color: red" onclick="closeLeaderPopup()">X</span>';
     
     popup_inner.appendChild(cross_div_icon);
     //add header

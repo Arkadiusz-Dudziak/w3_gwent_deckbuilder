@@ -118,7 +118,6 @@ body {
   right: 0;
   bottom: 0;
   margin: auto;
-  background-color: transparent;
 }
 
 #popup_inner {
@@ -134,7 +133,10 @@ body {
   color: black;
   background-color: #000;
   color: #cea125;
-  background-color: transparent;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  border: 2px #cea125 solid;
 }
 
 .popup_header {
