@@ -56,8 +56,7 @@ var deck_statistics = {
         "number_hero_cards": 0,
         "number_of_special_cards": 0,
         "number_of_unit_cards":0
-    }       
-    
+    }        
 }
 
 
@@ -102,6 +101,12 @@ function choseFaction(faction)
     var list = document.getElementById('faction-picker-ul').getElementsByTagName("li");
     var number = 0;
     current_faction = faction;
+
+    if(localStorage.getItem("deck_statistics")!=null)
+    {
+        deck_statistics = JSON.parse(localStorage.getItem("deck_statistics"))
+        changeDeckStatistics();
+    }
 
     switch(faction)
     {
@@ -186,6 +191,7 @@ function getCardId(img_path, faction)
 
 function saveChangesToLocalStorage()
 {
+    localStorage.setItem("deck_statistics", JSON.stringify(deck_statistics));
     localStorage.setItem("cards_in_deck", JSON.stringify(cards_in_deck));
     localStorage.setItem("cards", JSON.stringify(cards));
 }
@@ -197,11 +203,19 @@ function movecard(i)
     let plus_or_minus = 1; // indicates if deck statistics should be added or substracted - 1 added, -1 substracted
     let parent = i.parentNode;
     let parentparent = parent.parentNode;
+    let temp_faction_name_or_neutral = faction_name_or_neutral;
     console.log("parent.id = ", parent.id, " ", i.id, "parentParent.id", parentparent.id);
+
+    if(faction_name_or_neutral == "ne")
+        temp_faction_name_or_neutral += "-" + current_faction;
+
     if(parent.id=="filtered_card_deck" || parentparent.id =="filtered_card_deck")
     {
+        console.log("---> temp_faction_name_or_neutral: ", temp_faction_name_or_neutral);
+        
         foundCard = getCard(i.src, faction_name_or_neutral);
         console.log("filtered_card_deck", foundCard);
+        
         cards_in_deck[faction_name_or_neutral] = cards_in_deck[faction_name_or_neutral].filter( x => 
             x.img_path != foundCard[0].img_path
         );
@@ -415,6 +429,13 @@ function openLeaderPopup()
 window.onload = function() {
     choseFaction('ng');
     // changeFilter('ALL CARDS', 0)
+    if(localStorage.getItem("deck_statistics")!=null)
+    {
+        deck_statistics = JSON.parse(localStorage.getItem("deck_statistics"))
+        changeDeckStatistics();
+    }
+        
+
     changeFilter('ALL CARDS', 0, 0);
     changeFilter('ALL CARDS', 0, 1);
     console.log("-------------------AFTER LOAD------------------")

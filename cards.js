@@ -13,7 +13,11 @@ var cards_in_deck = {
     "ng":[],
     "ms":[],
     "sc":[],
-    "ne":[]
+    "ne":[],
+    "ne-nr":[],
+    "ne-ng":[],
+    "ne-ms":[],
+    "ne-sc":[]
 }
 // JSON.parse(localStorage.getItem("names"));
 if(localStorage.getItem("cards_in_deck")!=null)
