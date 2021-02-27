@@ -1,5 +1,6 @@
-var resources_path = "resources/Gwent_without_Bleeding/"
-var leaders_path = "resources/Gwent_without_Bleeding/Leaders/"
+var resources_path = "original_cards/"
+// D:\_projekty\gwent_deckbuilder\original_cards\Leaders
+var leaders_path = "original_cards/Leaders/"
 
 var leaders = 
 {
