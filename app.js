@@ -194,6 +194,7 @@ function saveChangesToLocalStorage()
     localStorage.setItem("deck_statistics", JSON.stringify(deck_statistics));
     localStorage.setItem("cards_in_deck", JSON.stringify(cards_in_deck));
     localStorage.setItem("cards", JSON.stringify(cards));
+    localStorage.setItem("leaders_picked", JSON.stringify(leaders_picked));
 }
 
 function movecard(i)
@@ -369,6 +370,7 @@ function setLeader(leader)
             faction_leaders[i].classList.remove("chosen_leader_inside_popup");
     }
     leaders_picked[current_faction] = leader;
+    saveChangesToLocalStorage();
     document.getElementById('leader-art').innerHTML = '<img src="'+leaders[current_faction][leader].img_path+'"/>'
 
     let audio = new Audio("card_sound.wav");
@@ -435,14 +437,20 @@ function openLeaderPopup()
 
 
 window.onload = function() {
-    choseFaction('ng');
+    
     // changeFilter('ALL CARDS', 0)
     if(localStorage.getItem("deck_statistics")!=null)
     {
         deck_statistics = JSON.parse(localStorage.getItem("deck_statistics"))
         changeDeckStatistics();
     }
-        
+
+    if(localStorage.getItem("leaders_picked") != null)
+    {
+        leaders_picked = JSON.parse(localStorage.getItem("leaders_picked"))
+    }
+    
+    choseFaction('ng');
 
     changeFilter('ALL CARDS', 0, 0);
     changeFilter('ALL CARDS', 0, 1);
